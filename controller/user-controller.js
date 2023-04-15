@@ -20,10 +20,10 @@ async function createUser(req, res) {
 
   const userExists = await User.findOne({ email });
 
-  // if (userExists) {
-  //   res.status(400);
-  //   throw new Error("User Already available on this email");
-  // }
+  if (userExists) {
+    res.status(400);
+    throw new Error("User Already available on this email");
+  }
 
   let user;
   bcrypt.hash(password, saltRounds, async function (err, hash) {
@@ -74,7 +74,7 @@ const SendOTP = asyncHandler(async (req, res) => {
 });
 
 async function testPassword (req, res){
-  let regex = /^[a-zA-Z]([0-9a-zA-Z]){2,10}$/;
+  let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const { password } = req.body;
 
   if(!regex.test(password)){
