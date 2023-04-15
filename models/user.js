@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    fName: {
+    firstname: {
         type: String,
         min: 3,
         max: 255,
     },
-    lName: {
+    lastname: {
         type: String,
         min: 3,
         max: 255,
@@ -15,11 +15,17 @@ const userSchema = new Schema({
     email: {
         type: String,
     },
-    pass: {
+    password: {
         type: String,
     },
+    otp: {
+        type: String
+    },
+    isValidated: {
+        type: Boolean
+    }
 });
 
 const User = mongoose.model("user", userSchema);
 
-module.exports = {User}
+module.exports = { User }

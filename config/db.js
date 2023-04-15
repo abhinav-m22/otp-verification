@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 module.exports = async function connection() {
-    const URL = "mongodb+srv://test:1234@cluster0.6gbs8q3.mongodb.net/?retryWrites=true&w=majority"
+    const URL = process.env.DB
     try {
         await mongoose.connect(URL, { useUnifiedTopology: true, useNewUrlParser: true });
         console.log("Database Connected Sucessfully");
