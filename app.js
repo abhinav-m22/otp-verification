@@ -5,7 +5,7 @@ const exphbs = require('express-handlebars');
 const { User } = require("./models/user.js");
 const connection = require("./config/db.js");
 
-const { createUser } = require("./controller/user-controller.js")
+const { createUser, testPassword } = require("./controller/user-controller.js")
 
 const { generateOTP } = require("./services/genOTP.js");
 const { sendMail } = require('./services/Mail.js');
@@ -34,6 +34,8 @@ app.post('/send', async function (req, res) {
     console.log(req.body);
     email = req.body.email;
 
+    testPassword(req, res);
+
     createUser(req, res);
 
     await sendMail({
@@ -50,7 +52,7 @@ app.post('/verify', async function (req, res) {
     const user = await User.findOne({ email });
     user.otp = otp;
     user.save();
-    
+
     if (req.body.otp === otp) {
         user.isValidated = true;
         res.send("You have been successfully registered");

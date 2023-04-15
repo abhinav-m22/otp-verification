@@ -73,4 +73,14 @@ const SendOTP = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { SendOTP, createUser }
+async function testPassword (req, res){
+  let regex = /^[a-zA-Z]([0-9a-zA-Z]){2,10}$/;
+  const { password } = req.body;
+
+  if(!regex.test(password)){
+    res.status(400);
+    throw new Error("Invalid password type");
+  }
+}
+
+module.exports = { SendOTP, createUser, testPassword }
